@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "       Curso APIs\n    Parcial Práctico\nJosé Libardo López Lesmes"', () => {
+      expect(appController.getHello()).toBe('       Curso APIs\n    Parcial Práctico\nJosé Libardo López Lesmes');
     });
   });
 });
