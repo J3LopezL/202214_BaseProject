@@ -1,9 +1,8 @@
-![banner](https://github.com/J3LopezL/202214_BaseProject/tree/master/images/banner.jpg)
+![banner](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/banner.jpg)
 
 ## Description
 
-Practical test API's course.
-José Libardo López Lesmes
+Practical test API's course.<br>José Libardo López Lesmes
 
 ## Installation
 
@@ -27,3 +26,9 @@ $ npm run start:dev
 # unit tests
 $ npm run test
 ```
+
+## Model
+![Model](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/model.png)
+
+## Relations
+![Relations](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/relations.png)
