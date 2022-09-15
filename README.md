@@ -1,4 +1,4 @@
-![banner](https://github.com/J3LopezL/202214_BaseProject/tree/master/images/banner.jpg)
+![banner](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/banner.jpg)
 
 ## Description
 
