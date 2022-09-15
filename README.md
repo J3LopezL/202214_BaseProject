@@ -2,8 +2,7 @@
 
 ## Description
 
-Practical test API's course.
-José Libardo López Lesmes
+Practical test API's course.<br>José Libardo López Lesmes
 
 ## Installation
 
