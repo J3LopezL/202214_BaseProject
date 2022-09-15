@@ -26,3 +26,9 @@ $ npm run start:dev
 # unit tests
 $ npm run test
 ```
+
+## Model
+![Model](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/model.jpg)
+
+## Relations
+![Relations](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/relations.jpg)
