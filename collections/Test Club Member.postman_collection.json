@@ -1,0 +1,1451 @@
+{
+	"info": {
+		"_postman_id": "7d7cd4d3-98bf-4b66-bd2c-7e7fee80f223",
+		"name": "Test Club Member",
+		"description": "Buy or rent spacecrafts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19373966"
+	},
+	"item": [
+		{
+			"name": "Club",
+			"item": [
+				{
+					"name": "Home",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Get expected name student into message\", function () {",
+									"   var data = pm.response.text();",
+									"   pm.expect(data).to.include(\"José Libardo López Lesmes\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						},
+						"description": "Verifica sí el servidor esta funcionanado.\n\n```\nCurso APIs       \nParcial Práctico\nJosé Libardo López Lesmes\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Valid Club",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_club\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs"
+							]
+						},
+						"description": "Crea un nuevo club en la aplicación.\n\nPara la prueba, se guarda el id del club en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"id\": \"5e9b702b-84b2-4180-ace2-b962033672d9\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Other Valid Club",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_club1\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Los Cocteleros\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2018-01-12T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs"
+							]
+						},
+						"description": "Crea un nuevo club en la aplicación.\n\nPara la prueba, se guarda el id del club en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"id\": \"5e9b702b-84b2-4180-ace2-b962033672d9\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Invalid Club",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message[0]).to.eql(\"description must be shorter than or equal to 100 characters\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry. Dada la validación al pasar de 100 caracteres no va crear el nuevo club\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs"
+							]
+						},
+						"description": "Se intenta crear un nuevo club en la aplicación exediendo el numero de caracteres permitidos en la descripción.\n\nSe espera que se responda el mensaje \"description must be shorter than or equal to 100 characters\"\n\n**Código http esperado: 400**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 400,\n    \"message\": [\n        \"description must be shorter than or equal to 100 characters\"\n    ],\n    \"error\": \"Bad Request\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Club",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_club}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_club}}"
+							]
+						},
+						"description": "Obtiene la información de un club de la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el id del club deseado por la URL de la petición.\n\n**Código http esperado: 200**\n\n**JSON de salida**\n\n```\n{\n    \"id\": \"a1bd6cb0-ee1b-4a96-815d-7fd930717c3a\",\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"members\": [\n        {\n            \"id\": \"63984466-4875-46f1-afa4-5a745ea4b063\",\n            \"name\": \"Carlos Diaz Cantor\",\n            \"email\": \"carlosd@gmail.com\",\n            \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n        },\n        {\n            \"id\": \"1a852655-f141-45ae-9d80-85ed3e96f91e\",\n            \"name\": \"María Dueñas Muñoz\",\n            \"email\": \"mariam@gmail.com\",\n            \"dateBirth\": \"1972-07-25T00:00:00.000Z\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Clubs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Number of Clubs > ' + 0, function () {",
+									"   var data = pm.response.json()",
+									"   pm.expect(data.length).to.greaterThan(0)",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs"
+							]
+						},
+						"description": "Obtiene todos los clubs registrados en la aplicacion.\n\nLa petición no tiene cuerpo.\n\nPara la prueba, se verifica que el conjunto de clubs en la respuesta tenga más de uno.\n\n**Código http esperado: 200**\n\n**Ejemplo de respuesta:**\n\n``` plaintext\n[\n    {\n        \"id\": \"6647bd21-51f5-4da6-a616-07260a74350b\",\n        \"name\": \"Los Arrayanes\",\n        \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n        \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n        \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n        \"members\": [\n            {\n                \"id\": \"ce20da60-311a-4e57-9cf0-0a685a429696\",\n                \"name\": \"Carlos Diaz Cantor\",\n                \"email\": \"carlosd@gmail.com\",\n                \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n            }\n        ]\n    },\n    {\n        \"id\": \"a1bd6cb0-ee1b-4a96-815d-7fd930717c3a\",\n        \"name\": \"Los Arrayanes\",\n        \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n        \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n        \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n        \"members\": []\n    }\n]\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Club that does not Exist.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message).to.eql(\"The club with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Intenta obtener la información de un club que no exiete en la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el id del club deseado por la URL de la petición, dado que el club no existe se espera el mensaje \"The club with the given id was not found\"\n\n**Código http esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The club with the given id was not found\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Los Arrayanes VIP\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_club}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_club}}"
+							]
+						},
+						"description": "Actualiza la información de un club existente.\n\nSe envía el Id del club en la URL de la petición.\n\nEn el cuerpo del mensaje se envian los datos actualizados.\n\n**Código HTTP esperado: 200**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Los Arrayanes VIP\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"id\": \"a1bd6cb0-ee1b-4a96-815d-7fd930717c3a\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Club that does not exist.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"The club with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Los Cachacos\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2002-10-08T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Intenta actualizar un club que no existe en la aplicación.\n\nPara la prueba se verifica que se genera el error y el mensaje \"The club with the given id was not found\".\n\n**Código HTTP esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The club with the given id was not found\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_club}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_club}}"
+							]
+						},
+						"description": "Borra un club. Se envía el id del club que desea borrar y que fue creado con anterioridad.\n\n**Código HTTP esperado: 204**"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Club that does not exist.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message).to.eql(\"The club with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Intenta borrar un club que no existe en la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el id del club que no existe por la URL de la petición.\n\n**Código http esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The club with the given id was not found\"\n}\n\n```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Member",
+			"item": [
+				{
+					"name": "Create a Valid Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_member\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Crea un nuevo socio en la aplicación.\n\nPara la prueba, se guarda el id del socio en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\",\n    \"id\": \"afc2a303-04a6-40b7-9435-6e93ba66af3f\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create other Valid Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_member1\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Crea un nuevo socio en la aplicación.\n\nPara la prueba, se guarda el id del socio en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\",\n    \"id\": \"afc2a303-04a6-40b7-9435-6e93ba66af3f\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a invalid Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message[0]).to.eql(\"email must be an email\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd$gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Se intenta crea un nuevo socio en la aplicación y en el cuerpo del mensaje se coloca una dirección de correo invalida.\n\nSe espera recibir el mensaje \"email must be an email\"\n\n**Código http esperado: 400**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 400,\n    \"message\": [\n        \"email must be an email\"\n    ],\n    \"error\": \"Bad Request\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Members.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.test('Number of Clubs > ' + 0, function () {",
+									"   pm.expect(data.length).to.greaterThan(0)",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Obtiene todos los socios de la aplicación.\n\nLa petición no tiene cuerpo.\n\nPara la prueba, se verifica que el conjunto de socios en la respuesta tenga más de uno.\n\n**Código http esperado: 200**\n\n**Ejemplo de respuesta:**\n\n``` plaintext\n[\n    {\n        \"id\": \"ce20da60-311a-4e57-9cf0-0a685a429696\",\n        \"name\": \"Carlos Diaz Cantor\",\n        \"email\": \"carlosd@gmail.com\",\n        \"dateBirth\": \"1973-02-28T00:00:00.000Z\",\n        \"clubs\": [\n            {\n                \"id\": \"6647bd21-51f5-4da6-a616-07260a74350b\",\n                \"name\": \"Los Arrayanes\",\n                \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n                \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n                \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n            }\n        ]\n    },\n    {\n        \"id\": \"db9376a9-57c1-48f9-8efa-757fb7efdb31\",\n        \"name\": \"Maria Daza Muñoz\",\n        \"email\": \"mariam@gmail.com\",\n        \"dateBirth\": \"1972-07-25T00:00:00.000Z\",\n        \"clubs\": []\n    }\n]\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/members/{{new_member}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						},
+						"description": "Obtiene un socio de la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el id del socio deseado por la URL de la petición.\n\n**Código http esperado: 200**\n\n**JSON de salida**\n\n```\n{\n    \"id\": \"1a852655-f141-45ae-9d80-85ed3e96f91e\",\n    \"name\": \"María Dueñas Muñoz\",\n    \"email\": \"mariam@gmail.com\",\n    \"dateBirth\": \"1972-07-25T00:00:00.000Z\",\n    \"clubs\": [\n        {\n            \"id\": \"a1bd6cb0-ee1b-4a96-815d-7fd930717c3a\",\n            \"name\": \"Los Arrayanes\",\n            \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n            \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n            \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Member that does not Exist.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message).to.eql(\"The member with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/members/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Intenta obtener la información de un socio que no existe en la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el id del socio deseado por la URL de la petición, dado que el socio no existe se espera el mensaje \"The member with the given id was not found\"\n\n**Código http esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The member with the given id was not found\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Carlos Alberto Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n}\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members/{{new_member}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						},
+						"description": "Actualiza la información del socio existente.\n\nSe envía el Id del socio en la URL de la petición.\n\nEn el cuerpo del mensaje se envian los datos actualizados.\n\n**Código HTTP esperado: 200**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Carlos Alberto Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\",\n    \"id\": \"1a852655-f141-45ae-9d80-85ed3e96f91e\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Member that does not exist.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"The member with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Carlos Adolfo Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Intenta actualizar un socio que no existe en la aplicación.\n\nPara la prueba se verifica que se genera el error y el mensaje \"The member with the given id was not found\".\n\n**Código HTTP esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The member with the given id was not found\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/members/{{new_member}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members",
+								"{{new_member}}"
+							]
+						},
+						"description": "Borra un socio. Se envía el id del socio que desea borrar y que fue creado con anterioridad.\n\n**Código HTTP esperado: 204**"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A Member that does not exist.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message).to.eql(\"The member with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/members/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Intenta borrar un socio que no existe en la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el id del socio que no existe por la URL de la petición.\n\n**Código http esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The member with the given id was not found\"\n}\n\n```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Club-Member",
+			"item": [
+				{
+					"name": "Create a Valid Member Not Associated.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"nomember\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ricardo Casas Santamaria\",\n    \"email\": \"ricardoc@gmail.com\",\n    \"dateBirth\": \"1970-01-31T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Crea un nuevo socio en la aplicación.\n\nPara la prueba, se guarda el id del socio en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Ricardo Casas Santamaria\",\n    \"email\": \"ricardoc@gmail.com\",\n    \"dateBirth\": \"1970-01-31T00:00:00.000Z\",\n    \"id\": \"60db1556-cda0-4f32-9265-d7b2bbc87ef9\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Valid Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_clubcm\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Los Alcarabanes II\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2014-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs"
+							]
+						},
+						"description": "Crea un nuevo club en la aplicación.\n\nPara la prueba, se guarda el id del club en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"id\": \"5e9b702b-84b2-4180-ace2-b962033672d9\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Valid Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_membercm\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Crea un nuevo socio en la aplicación.\n\nPara la prueba, se guarda el id del socio en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\",\n    \"id\": \"afc2a303-04a6-40b7-9435-6e93ba66af3f\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create other Valid Member.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"new_membercm1\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Diana María Plata Toloza\",\n    \"email\": \"dianap@gmail.com\",\n    \"dateBirth\": \"1981-11-20T00:00:00.000Z\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/members",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"members"
+							]
+						},
+						"description": "Crea un nuevo socio en la aplicación.\n\nPara la prueba, se guarda el id del socio en una variable que será utilizada en otras peticiones de la colección.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"name\": \"Carlos Diaz Cantor\",\n    \"email\": \"carlosd@gmail.com\",\n    \"dateBirth\": \"1973-02-28T00:00:00.000Z\",\n    \"id\": \"afc2a303-04a6-40b7-9435-6e93ba66af3f\"\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a Member to a Club",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/{{new_membercm}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								"{{new_membercm}}"
+							]
+						},
+						"description": "Agrega un socio a un club en la aplicación.\n\nSe envía el Id del club y del socio a agregar en la URL de la petición.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"id\": \"6647bd21-51f5-4da6-a616-07260a74350b\",\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"members\": [\n        {\n            \"id\": \"ce20da60-311a-4e57-9cf0-0a685a429696\",\n            \"name\": \"Carlos Diaz Cantor\",\n            \"email\": \"carlosd@gmail.com\",\n            \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Add other Member to a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/{{new_membercm1}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								"{{new_membercm1}}"
+							]
+						},
+						"description": "Agrega un socio a un club en la aplicación.\n\nSe envía el Id del club y del socio a agregar en la URL de la petición.\n\n**Código http esperado: 201**\n\n**JSON de salida**\n\n```\n{\n    \"id\": \"6647bd21-51f5-4da6-a616-07260a74350b\",\n    \"name\": \"Los Arrayanes\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2020-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"members\": [\n        {\n            \"id\": \"ce20da60-311a-4e57-9cf0-0a685a429696\",\n            \"name\": \"Carlos Diaz Cantor\",\n            \"email\": \"carlosd@gmail.com\",\n            \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a Member that does not exist to a Club",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"",
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"})",
+									"pm.test(\"Get expected error message\", function () {",
+									"   pm.expect(data.message).to.eql(\"The member with the given id was not found.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_club}}/members/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_club}}",
+								"members",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						},
+						"description": "Se intenta agregar un socio que no existe a un club en la aplicación.\n\nSe envía el Id del club y el id de un socio que no existe en la URL de la petición.\n\n**Código http esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The member with the given id was not found.\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Member from a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/{{new_membercm}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								"{{new_membercm}}"
+							]
+						},
+						"description": "Obtiene un socio que esta en un club de la aplicación.\n\nLa petición no tiene cuerpo.\n\nSe envía el Id del socio y del club que desea consultar en la URL de la petición.\n\n**Código http esperado: 200**\n\n**JSON de salida**\n\n```\n{\n    \"id\": \"1a852655-f141-45ae-9d80-85ed3e96f91e\",\n    \"name\": \"María Dueñas Muñoz\",\n    \"email\": \"mariam@gmail.com\",\n    \"dateBirth\": \"1972-07-25T00:00:00.000Z\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All the Members of a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Number of Members > ' + 0, function () {",
+									"   var data = pm.response.json()",
+									"   pm.expect(data.length).to.greaterThan(0)",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								""
+							]
+						},
+						"description": "Actualiza los socios de un club de la aplicación.\n\nEn el cuerpo de la petición se coloca el id del socio.\n\nSe envía el Id del club a consultar en la URL de la petición.\n\n**Código http esperado: 200**\n\n**JSON de salida**\n\n```\n[\n    {\n        \"id\": \"63984466-4875-46f1-afa4-5a745ea4b063\",\n        \"name\": \"Carlos Diaz Cantor\",\n        \"email\": \"carlosd@gmail.com\",\n        \"dateBirth\": \"1973-02-28T00:00:00.000Z\"\n    },\n    {\n        \"id\": \"1a852655-f141-45ae-9d80-85ed3e96f91e\",\n        \"name\": \"María Dueñas Muñoz\",\n        \"email\": \"mariam@gmail.com\",\n        \"dateBirth\": \"1972-07-25T00:00:00.000Z\"\n    }\n]\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Member that not exist to a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 412\", function () {",
+									"   pm.response.to.have.status(412);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"The member with the given id is not associated to the club.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/{{nomember}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								"{{nomember}}"
+							]
+						},
+						"description": "Obtener un socio que no existe en un club de la aplicación.\n\nPara la prueba se verifica que se genera el error.\n\n**Código http esperado: 412**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 412,\n    \"message\": \"The member with the given id is not associated to the club.\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Members of a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\": \"{{new_membercm1}}\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								""
+							]
+						},
+						"description": "Actualiza la información del socio existente asociado a un club.\n\nSe envía el Id del club en la URL de la petición.\n\nEn el cuerpo del mensaje se envia el id del socio, en esta caso se actualiza la información de Carlos por la Diana.\n\n**Código HTTP esperado: 200**\n\n**JSON de salida**\n\n```\n{\n    \"id\": \"0ea09bc6-3eba-4420-9236-f1670cf8d4d9\",\n    \"name\": \"Los Alcarabanes II\",\n    \"image\": \"https://www.stripclubbarcelona.com/wp-content/uploads/2018/12/opium-club-barcelona.jpg\",\n    \"dateCreate\": \"2014-02-24T07:01:31.229Z\",\n    \"description\": \"Lorem Ipsum: is simply dummy text of the printing and typesetting industry.\",\n    \"members\": [\n        {\n            \"id\": \"ca2f92d7-c908-47f7-be3d-9ae00a02a533\"\n        }\n    ]\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Member that does not exist of a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"The member with the given id was not found.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"id\": \"00000000-0000-0000-0000-000000000000\"\n    }\n]"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								""
+							]
+						},
+						"description": "Se intenta actualizar la información del socio asociado a un club por la de un socio que no existe.\n\nSe envía el Id del club en la URL de la petición.\n\nEn el cuerpo del mensaje se envia el id del socio que no existe, se espera un mesaje \"The member with the given id was not found.\".\n\n**Código HTTP esperado: 404**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 404,\n    \"message\": \"The member with the given id was not found.\"\n}\n\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a member of a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/{{new_membercm1}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								"{{new_membercm1}}"
+							]
+						},
+						"description": "Borra un socio asociado a un club. Se envía el id del club y del socio creados y asociados con anterioridad.\n\n**Código HTTP esperado: 204**"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a member that not associated to a Club.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 412\", function () {",
+									"    pm.response.to.have.status(412);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"    var data = pm.response.json();",
+									"    pm.expect(data.message).to.eql(\"The member with the given id is not associated to the club.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clubs/{{new_clubcm}}/members/{{nomember}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clubs",
+								"{{new_clubcm}}",
+								"members",
+								"{{nomember}}"
+							]
+						},
+						"description": "Intenta borrar un socio que no esta asociado a un club existente en la aplicación.\n\nSe envía el Id del club existente y el id del socio existente que no ha sido asociado a club en la URL de la petición.\n\nPara la prueba se verifica que se genera el error y el mensaje \"The member with the given id is not associated to the club\"\n\n**Código http esperado: 412**\n\n**JSON de salida**\n\n```\n{\n    \"statusCode\": 412,\n    \"message\": \"The member with the given id is not associated to the club.\"\n}\n\n```"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:3000/api/v1",
+			"type": "string"
+		}
+	]
+}

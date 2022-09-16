@@ -1,4 +1,4 @@
-![banner](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/banner.jpg)
+![banner](https://github.com/J3LopezL/202214_BaseProject/blob/images/banner.jpg)
 
 ## Description
 
@@ -28,7 +28,11 @@ $ npm run test
 ```
 
 ## Model
-![Model](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/model.png)
+![Model](https://github.com/J3LopezL/202214_BaseProject/blob/images/model.png)
 
 ## Relations
-![Relations](https://github.com/J3LopezL/202214_BaseProject/blob/master/src/images/relations.png)
+![Relations](https://github.com/J3LopezL/202214_BaseProject/blob/images/relations.png)
+
+## Postman Test
+
+The documentation and tests of Postman can be find into the collection "Test Club Member", this collection includes three folders: Club, Member and Club-Member, the test were created for execute over all collection or also they can execute one by one. Download them [Here](https://github.com/J3LopezL/202214_BaseProject/blob/collections/Test Club Member.postman_collection.json)
