@@ -11,29 +11,29 @@ export class ClubMemberController {
     constructor(private readonly clubMemberService: ClubMemberService) {}
 
 @Post(':clubId/members/:memberId')
-    async addMemberClub(@Param('clubId') clubId: string, @Param('memberId') memberId: string){
-       return await this.clubMemberService.addMemberClub(clubId, memberId);
+    async addMemberToClub(@Param('clubId') clubId: string, @Param('memberId') memberId: string){
+       return await this.clubMemberService.addMemberToClub(clubId, memberId);
    }
 
 @Get(':clubId/members/:memberId')
-   async finMemberByClubIdMemberId(@Param('clubId') clubId: string, @Param('memberId') memberId: string){
-       return await this.clubMemberService.findMemberByClubIdMemberId(clubId, memberId);
+   async finMemberFromClub(@Param('clubId') clubId: string, @Param('memberId') memberId: string){
+       return await this.clubMemberService.findMemberFromClub(clubId, memberId);
    }
 
 @Get(':clubId/members')
-   async findMembersByClubId(@Param('clubId') clubId: string){
-       return await this.clubMemberService.findMembersByClubId(clubId);
+   async findMembersFromClub(@Param('clubId') clubId: string){
+       return await this.clubMemberService.findMembersFromClub(clubId);
    }
 
 @Put(':clubId/members')
-   async associateMembersClub(@Body() membersDto: MemberDto[], @Param('clubId') clubId: string){
+   async updateMembersFromClub(@Body() membersDto: MemberDto[], @Param('clubId') clubId: string){
        const members = plainToInstance(MemberEntity, membersDto)
-       return await this.clubMemberService.associateMembersClub(clubId, members);
+       return await this.clubMemberService.updateMembersFromClub(clubId, members);
    }
 
 @Delete(':clubId/members/:memberId')
 @HttpCode(204)
-    async deleteMemberClub(@Param('clubId') clubId: string, @Param('memberId') memberId: string){
-        return await this.clubMemberService.deleteMemberClub(clubId, memberId);
+    async deleteMemberFromClub(@Param('clubId') clubId: string, @Param('memberId') memberId: string){
+        return await this.clubMemberService.deleteMemberFromClub(clubId, memberId);
     }
 }

@@ -12,7 +12,7 @@ export class ClubDto {
     
     @IsString()
     @IsNotEmpty()
-    readonly dateCreate: string;
+    readonly dateCreate: Date;
     
     @IsString()
     @IsNotEmpty()

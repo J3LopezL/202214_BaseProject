@@ -15,7 +15,7 @@ export class ClubMemberService {
     private readonly memberRepository: Repository<MemberEntity>
 ) {}
 
-async addMemberClub(clubId: string, memberId: string): Promise<ClubEntity> {
+async addMemberToClub(clubId: string, memberId: string): Promise<ClubEntity> {
     const member: MemberEntity = await this.memberRepository.findOne({where: {id: memberId}});
     if (!member)
       throw new BusinessLogicException("The member with the given id was not found.", BusinessError.NOT_FOUND);
@@ -28,7 +28,15 @@ async addMemberClub(clubId: string, memberId: string): Promise<ClubEntity> {
     return await this.clubRepository.save(club);
   }
 
-async findMemberByClubIdMemberId(clubId: string, memberId: string): Promise<MemberEntity> {
+async findMembersFromClub(clubId: string): Promise<MemberEntity[]> {
+    const club: ClubEntity = await this.clubRepository.findOne({where: {id: clubId}, relations: ["members"]});
+    if (!club)
+      throw new BusinessLogicException("The club with the given id was not found.", BusinessError.NOT_FOUND)
+   
+    return club.members;
+  }
+
+async findMemberFromClub(clubId: string, memberId: string): Promise<MemberEntity> {
     const member: MemberEntity = await this.memberRepository.findOne({where: {id: memberId}});
     if (!member)
       throw new BusinessLogicException("The member with the given id was not found.", BusinessError.NOT_FOUND)
@@ -45,15 +53,7 @@ async findMemberByClubIdMemberId(clubId: string, memberId: string): Promise<Memb
     return clubMember;
 }
 
-async findMembersByClubId(clubId: string): Promise<MemberEntity[]> {
-    const club: ClubEntity = await this.clubRepository.findOne({where: {id: clubId}, relations: ["members"]});
-    if (!club)
-      throw new BusinessLogicException("The club with the given id was not found.", BusinessError.NOT_FOUND)
-   
-    return club.members;
-}
-
-async associateMembersClub(clubId: string, members: MemberEntity[]): Promise<ClubEntity> {
+async updateMembersFromClub(clubId: string, members: MemberEntity[]): Promise<ClubEntity> {
     const club: ClubEntity = await this.clubRepository.findOne({where: {id: clubId}, relations: ["members"]});
 
     if (!club)
@@ -69,7 +69,7 @@ async associateMembersClub(clubId: string, members: MemberEntity[]): Promise<Clu
     return await this.clubRepository.save(club);
   }
 
-async deleteMemberClub(clubId: string, memberId: string){
+async deleteMemberFromClub(clubId: string, memberId: string){
     const member: MemberEntity = await this.memberRepository.findOne({where: {id: memberId}});
     if (!member)
       throw new BusinessLogicException("The member with the given id was not found.", BusinessError.NOT_FOUND)

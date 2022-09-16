@@ -11,5 +11,5 @@ export class MemberDto {
     
     @IsString()
     @IsNotEmpty()
-    readonly dateBirth: string;
+    readonly dateBirth: Date;
 }

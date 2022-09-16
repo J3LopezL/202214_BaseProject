@@ -30,9 +30,7 @@ export class ClubService {
         const persistedClub: ClubEntity = await this.clubRepository.findOne({where:{id}});
         if (!persistedClub)
           throw new BusinessLogicException("The club with the given id was not found", BusinessError.NOT_FOUND);
-       
         club.id = id; 
-       
         return await this.clubRepository.save(club);
     }
  
@@ -40,7 +38,6 @@ export class ClubService {
         const club: ClubEntity = await this.clubRepository.findOne({where:{id}});
         if (!club)
           throw new BusinessLogicException("The club with the given id was not found", BusinessError.NOT_FOUND);
-     
         await this.clubRepository.remove(club);
     }
 }
